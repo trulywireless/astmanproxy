@@ -41,7 +41,7 @@
 
 struct ast_server {
 	char nickname[80];
-	char ast_host[40];
+	char ast_host[80];
 	char ast_port[10];
 	char ast_user[80];
 	char ast_pass[80];
