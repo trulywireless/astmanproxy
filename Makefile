@@ -78,6 +78,9 @@ HDRS := src/include/astmanproxy.h
 
 all: astmanproxy cert
 
+debug: CFLAGS += -g
+debug: astmanproxy cert
+
 astmanproxy: $(OBJS) $(SOBJS)
 	$(CC) $(CFLAGS) -o $@ $(ASTLINK) $(OBJS) $(LIBS)
 
