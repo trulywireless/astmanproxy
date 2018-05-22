@@ -183,7 +183,7 @@ int WriteClients(struct message *m) {
 	char *event;
 	int valret;
         
-        pthread_mutex_lock(&sessionlock);
+	pthread_mutex_lock(&sessionlock);
 	c = sessions;
 
 	// We stash New Channel events in case they are filtered and need to be
@@ -242,7 +242,7 @@ int WriteClients(struct message *m) {
 	if( !strcasecmp( event, "Hangup" ) ) {
 		DelFromStack(m, m->session);
 	}
-        pthread_mutex_unlock(&sessionlock);
+	pthread_mutex_unlock(&sessionlock);
 	return 1;
 }
 
@@ -253,7 +253,7 @@ int WriteAsterisk(struct message *m) {
 
 	first = NULL;
 	dest = NULL;
-        pthread_mutex_lock(&sessionlock);
+	pthread_mutex_lock(&sessionlock);
 	s = sessions;
 	u = m->session;
 
@@ -291,7 +291,7 @@ int WriteAsterisk(struct message *m) {
 	}
 	ast_carefulwrite(s->fd, "\r\n", 2, s->writetimeout);
 	pthread_mutex_unlock(&s->lock);
-        pthread_mutex_unlock(&sessionlock);
+	pthread_mutex_unlock(&sessionlock);
 	return 1;
 }
 
