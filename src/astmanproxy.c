@@ -279,8 +279,9 @@ int WriteAsterisk(struct message *m) {
 		return 1;
 
 	debugmsg("writing block to %s", s->server->ast_host);
-
-	pthread_mutex_lock(&s->lock);
+	pthread_mutex_unlock(&sessionlock);
+	
+        pthread_mutex_lock(&s->lock);
 	for (i=0; i<m->hdrcount; i++) {
 		if (strcasecmp(m->headers[i], "Server:") ) {
 			sprintf(outstring, "%s\r\n", m->headers[i]);
@@ -289,7 +290,6 @@ int WriteAsterisk(struct message *m) {
 	}
 	ast_carefulwrite(s->fd, "\r\n", 2, s->writetimeout);
 	pthread_mutex_unlock(&s->lock);
-	pthread_mutex_unlock(&sessionlock);
 	return 1;
 }
 
