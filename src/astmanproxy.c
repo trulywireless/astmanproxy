@@ -183,7 +183,6 @@ int WriteClients(struct message *m) {
 	char *event;
 	int valret;
         
-	pthread_mutex_lock(&sessionlock);
 	c = sessions;
 
 	// We stash New Channel events in case they are filtered and need to be
@@ -242,7 +241,6 @@ int WriteClients(struct message *m) {
 	if( !strcasecmp( event, "Hangup" ) ) {
 		DelFromStack(m, m->session);
 	}
-	pthread_mutex_unlock(&sessionlock);
 	return 1;
 }
 
