@@ -265,6 +265,8 @@ int ReadConfig() {
 }
 
 FILE *OpenLogfile() {
+	return stdout;
+	/*
 	FILE *FP;
 	FP = fopen( pc.logfile, "a" );
 	if ( !FP ) {
@@ -273,6 +275,7 @@ FILE *OpenLogfile() {
 	}
 
 	return FP;
+	*/
 }
 
 int SetProcUID() {
