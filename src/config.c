@@ -302,10 +302,12 @@ int SetProcUID() {
 	} else
 		newgid = gp->gr_gid;
 
+	/*
 	if ( chown( pc.logfile, newuid, newgid ) < 0 ) {
 		fprintf(stderr, "chown(%d,%d) of %s failed!\n", newuid, newgid, pc.logfile);
 		return( -1 );
 	}
+	*/
 
 	if (setgid(newgid) < 0) {
 		fprintf(stderr, "setgid(%d) failed.\n", newgid);
