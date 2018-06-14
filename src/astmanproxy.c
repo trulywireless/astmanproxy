@@ -38,16 +38,10 @@ pthread_mutex_t userslock;
 pthread_mutex_t loglock;
 pthread_mutex_t debuglock;
 static int asock = -1;
-FILE *proxylog;
 int debug = 0;
 int foreground = 0;
 
 void hup(int sig) {
-	if (proxylog) {
-		fflush(proxylog);
-		fclose(proxylog);
-	}
-	proxylog = OpenLogfile();
 	logmsg("Received HUP -- reopened log");
 	ReadPerms();
 	logmsg("Received HUP -- reread permissions");
@@ -120,7 +114,6 @@ void leave(int sig) {
 	debugmsg("Done!\n");
 	logmsg("Proxy stopped; shutting down.");
 
-	fclose(proxylog);
 	pthread_mutex_destroy(&sessionlock);
 	pthread_mutex_destroy(&loglock);
 	pthread_mutex_destroy(&debuglock);
@@ -715,7 +708,6 @@ int main(int argc, char *argv[])
 
 
 	ReadConfig();
-	proxylog = OpenLogfile();
 	debugmsg("loading handlers");
 	LoadHandlers();
 	debugmsg("loaded handlers");
