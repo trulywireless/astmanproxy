@@ -10,7 +10,7 @@
 
 #include "astmanproxy.h"
 
-#define DATEFORMAT		"%b %e %T"
+#define DATEFORMAT		"%F %T"
 
 extern int debug;
 extern pthread_mutex_t loglock;
