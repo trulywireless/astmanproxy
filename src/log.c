@@ -10,9 +10,8 @@
 
 #include "astmanproxy.h"
 
-#define DATEFORMAT		"%b %e %T"
+#define DATEFORMAT		"%F %T"
 
-extern FILE *proxylog;
 extern int debug;
 extern pthread_mutex_t loglock;
 extern pthread_mutex_t debuglock;
@@ -54,14 +53,12 @@ void logmsg (const char *fmt, ...)
 	localtime_r(&t, &tm);
 	strftime(date, sizeof(date), DATEFORMAT, &tm);
 
-	if (proxylog) {
-		pthread_mutex_lock(&loglock);
-		va_start(ap, fmt);
-		fprintf(proxylog, "%s: ", date);
-		vfprintf(proxylog, fmt, ap);
-		fprintf(proxylog, "\n");
-		va_end(ap);
-		fflush(proxylog);
-		pthread_mutex_unlock(&loglock);
-	}
+	pthread_mutex_lock(&loglock);
+	va_start(ap, fmt);
+	fprintf(stdout, "%s: ", date);
+	vfprintf(stdout, fmt, ap);
+	fprintf(stdout, "\n");
+	va_end(ap);
+	fflush(stdout);
+	pthread_mutex_unlock(&loglock);
 }
