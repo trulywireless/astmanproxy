@@ -177,7 +177,7 @@ int WriteClients(struct message *m) {
 	char *uniqueid;
 	char *event;
 	int valret;
-
+        
 	c = sessions;
 
 	// We stash New Channel events in case they are filtered and need to be
@@ -246,7 +246,7 @@ int WriteAsterisk(struct message *m) {
 
 	first = NULL;
 	dest = NULL;
-
+	pthread_mutex_lock(&sessionlock);
 	s = sessions;
 	u = m->session;
 
@@ -274,8 +274,9 @@ int WriteAsterisk(struct message *m) {
 		return 1;
 
 	debugmsg("writing block to %s", s->server->ast_host);
-
-	pthread_mutex_lock(&s->lock);
+	pthread_mutex_unlock(&sessionlock);
+	
+        pthread_mutex_lock(&s->lock);
 	for (i=0; i<m->hdrcount; i++) {
 		if (strcasecmp(m->headers[i], "Server:") ) {
 			sprintf(outstring, "%s\r\n", m->headers[i]);
