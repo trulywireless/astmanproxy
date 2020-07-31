@@ -1,6 +1,6 @@
 /* 	Asterisk Manager Proxy
 	Copyright (c) 2005-2008 David C. Troy <dave@popvox.com>
-	
+
 	This program is free software, distributed under the terms of
 	the GNU General Public License.
 
@@ -267,7 +267,7 @@ int WriteAsterisk(struct message *m) {
 	}
 
 	if (!s)
-	s = first;	
+	s = first;
 
 	/* Check for no servers and empty block -- Don't pester Asterisk if it is one*/
 	if (!s || !s->server || (!m->hdrcount && !m->headers[0][0]) )
@@ -661,7 +661,6 @@ static void *accept_thread()
 		sessions = s;
 		pthread_mutex_unlock(&sessionlock);
 
-		logmsg("Connection received from %s", ast_inet_ntoa(iabuf, sizeof(iabuf), s->sin.sin_addr));
 		if (debug) {
 			debugmsg("Connection received from %s", ast_inet_ntoa(iabuf, sizeof(iabuf), s->sin.sin_addr));
 			debugmsg("Set %s input format to %s", ast_inet_ntoa(iabuf, sizeof(iabuf), s->sin.sin_addr), s->input->formatname);
@@ -677,7 +676,7 @@ static void *accept_thread()
 
 int main(int argc, char *argv[])
 {
-	struct sockaddr_in serv_sock_addr, client_sock_addr; 
+	struct sockaddr_in serv_sock_addr, client_sock_addr;
 	int cli_addrlen;
 	struct linger lingerstruct;	/* for socket reuse */
 	int flag;				/* for socket reuse */
@@ -759,7 +758,7 @@ int main(int argc, char *argv[])
 		serv_sock_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 	else
 		serv_sock_addr.sin_addr.s_addr = inet_addr( pc.listen_addr);
-		
+
 	serv_sock_addr.sin_port = htons((short)pc.listen_port);
 
 	/* Set listener socket re-use options */
@@ -767,7 +766,7 @@ int main(int argc, char *argv[])
 	lingerstruct.l_onoff = 1;
 	lingerstruct.l_linger = 5;
 	setsockopt(asock, SOL_SOCKET, SO_LINGER, (void *)&lingerstruct, sizeof(lingerstruct));
-	
+
 	if (bind(asock, (struct sockaddr *) &serv_sock_addr, sizeof serv_sock_addr ) < 0) {
 		fprintf(stderr,"Cannot bind to listener socket!\n");
 		exit(1);
